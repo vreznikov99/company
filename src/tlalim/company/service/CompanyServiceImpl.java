@@ -56,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<Employee> getGetEmployessBySalary(int salaryFrom, int salaryTo) {
+    public List<Employee> getEmployessBySalary(int salaryFrom, int salaryTo) {
 
         return null;
     }

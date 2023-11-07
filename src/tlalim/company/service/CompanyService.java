@@ -12,7 +12,7 @@ public interface CompanyService {
     Employee getEmployee(long id);
     List<Employee> getEmployeesByDepartment(String department);
     List<Employee> getAllEmployees();
-    List<Employee> getGetEmployessBySalary(int salaryFrom, int salaryTo);
+    List<Employee> getEmployessBySalary(int salaryFrom, int salaryTo);
     List<Employee> getEmployeeByAge(int ageFrom, int ageTo);
     List<DepartmentAvgSalary>  salaryDistributionByDepartments();
     List<SalaryIntervalDistribution> getSalaryDistribution(int interval);

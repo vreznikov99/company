@@ -139,45 +139,74 @@ class CompanyServiceImplTest {
         assertArrayEquals(expectedDistribution, actualDistribution);
      }
 
+    @org.junit.jupiter.api.Test
+    void testGetAllEmployees() {
+        // HW #22
+        List<Employee> listEmployees = company.getAllEmployees();
+        Employee[] arrayEmployess = listEmployees.toArray(new Employee[] {});
+        Arrays.sort(arrayEmployess);
+        assertArrayEquals(employees, arrayEmployess);
+    }
+
+    @org.junit.jupiter.api.Test
+    void testGetEmployessBySalary() {
+        // HW #22
+        // Everyone in company
+        List<Employee> listEmployeeAll = company.getEmployessBySalary(0, Integer.MAX_VALUE);
+        Employee[] arrEmployeeAll = listEmployeeAll.toArray(new Employee[] {});
+        Arrays.sort(arrEmployeeAll);
+        assertArrayEquals(employees, arrEmployeeAll);
+        // Checking negative salary
+        List<Employee> listEmployeeNegative = company.getEmployeeByAge(Integer.MIN_VALUE, 0);
+        assertTrue(listEmployeeNegative.isEmpty());
+        // Comparing by Salary
+        List<Employee> listEmployeeSalCompare1_2 = company.getEmployessBySalary(SALARY1, SALARY3); // SALARY3 is not included
+        Employee[] arrEmployeeSalCompare1_2 = listEmployeeSalCompare1_2.toArray(new Employee[] {});
+        Arrays.sort(arrEmployeeSalCompare1_2);
+        Employee[] arrExpected1_2 = {empl1, empl2};
+        assertArrayEquals(arrExpected1_2, arrEmployeeSalCompare1_2);
+
+    }
+
 
 
     @org.junit.jupiter.api.AfterEach
     void tearDown() {
     }
 
-    @org.junit.jupiter.api.Test
-    void hireEmployee() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void hireEmployee() {
+//    }
 
-    @org.junit.jupiter.api.Test
-    void fireEmployee() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void fireEmployee() {
+//    }
 
-    @org.junit.jupiter.api.Test
-    void getEmployee() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void getEmployee() {
+//    }
 
-    @org.junit.jupiter.api.Test
-    void getEmployeesByDepartment() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void getEmployeesByDepartment() {
+//    }
 
-    @org.junit.jupiter.api.Test
-    void getAllEmployees() {
-        // HW
-    }
+//    @org.junit.jupiter.api.Test
+//    void getAllEmployees() {
+//        // HW
+//    }
 
-    @org.junit.jupiter.api.Test
-    void getGetEmployessBySalary() {
-        // HW
-    }
+//    @org.junit.jupiter.api.Test
+//    void getGetEmployessBySalary() {
+//        // HW
+//    }
 
-    @org.junit.jupiter.api.Test
-    void getEmployeeByAge() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void getEmployeeByAge() {
+//    }
 
-    @org.junit.jupiter.api.Test
-    void salaryDistributionByDepartments() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void salaryDistributionByDepartments() {
+//    }
 
     @org.junit.jupiter.api.Test
     void getSalaryDistribution() {
