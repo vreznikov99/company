@@ -21,5 +21,4 @@ public interface CompanyService {
     void save(String filePath);
     void restore(String filePath);
 
-
 }
