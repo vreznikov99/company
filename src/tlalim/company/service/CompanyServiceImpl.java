@@ -2,9 +2,12 @@ package tlalim.company.service;
 
 import tlalim.company.dto.*;
 
-import java.util.List;
+import java.util.*;
 
 public class CompanyServiceImpl implements CompanyService {
+    HashMap<Long, Employee> employeesMap = new HashMap<>();
+    HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();
+
     @Override
     /*
      *  Adds new Employee into a company
@@ -13,7 +16,7 @@ public class CompanyServiceImpl implements CompanyService {
      *  returns reference to the being added Employee object
      */
     public Employee hireEmployee(Employee empl) {
-
+        // Algorithm Complexity: O[1]
         return null;
     }
 
@@ -24,7 +27,7 @@ public class CompanyServiceImpl implements CompanyService {
      *  the method must throw IllegalStateException
      */
     public Employee fireEmployee(long id) {
-
+        // Algorithm Complexity: O[1]
         return null;
     }
 
@@ -35,7 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
      *  the method returns null
      */
     public Employee getEmployee(long id) {
-
+        // Algorithm Complexity: O[1]
         return null;
     }
 
@@ -45,7 +48,7 @@ public class CompanyServiceImpl implements CompanyService {
      *  In the case none employees in the department the method returns empty list
      */
     public List<Employee> getEmployeesByDepartment(String department) {
-
+        // Algorithm Complexity: O[N]
         return null;
     }
 
