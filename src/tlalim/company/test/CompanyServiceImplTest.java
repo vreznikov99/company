@@ -1,5 +1,10 @@
 package tlalim.company.test;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
 import tlalim.company.dto.DepartmentAvgSalary;
 import tlalim.company.dto.Employee;
 import tlalim.company.dto.SalaryIntervalDistribution;
@@ -11,6 +16,8 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // for definition of tests ordering
 class CompanyServiceImplTest {
     private static final long ID1 = 123;
     private static final long ID2 = 124;
@@ -40,6 +47,7 @@ class CompanyServiceImplTest {
     Employee empl5 = new Employee(ID5, "name5", SALARY5, DEPARTMENT3, DATE5);
     Employee[] employees = {empl1, empl2, empl3, empl4, empl5};
 
+    private static final String FILE_PATH = "test.data";
     CompanyService company = null;
 
     @org.junit.jupiter.api.BeforeEach
@@ -48,12 +56,12 @@ class CompanyServiceImplTest {
         for(Employee empl: employees)
             company.hireEmployee(empl);
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void testHireEmployeeNormal(){
         Employee newEmployee = new Employee(ID6, "name6", SALARY1, DEPARTMENT1, DATE1);
         assertEquals(newEmployee, company.hireEmployee(newEmployee));
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void testHireEmployeeException(){
         Employee newEmployee = empl1;
         //FIXME
@@ -65,12 +73,12 @@ class CompanyServiceImplTest {
         }
         assertTrue(flException);
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void testFireEmployeeNormal(){
         assertEquals(empl1, company.fireEmployee(ID1));
         assertEquals(empl1, company.hireEmployee(empl1));
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void testFireEmployeeException() {
         boolean flException = false;
         try{
@@ -80,13 +88,13 @@ class CompanyServiceImplTest {
         }
         assertTrue(flException);
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void testGetEmployee() {
         assertEquals(empl1, company.getEmployee(ID1));
         assertNull(company.getEmployee(ID6));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testGetEmployeesByDepartment() {
         Employee[] expectedDep1 = {empl1, empl2};
         Employee[] expectedDep2 = {empl3, empl4};
@@ -119,7 +127,7 @@ class CompanyServiceImplTest {
            assertArrayEquals(expected, actual);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testGetEmployeeByAge() {
 //        List<Employee> listAll = company.getEmployeeByAge(0, 100);
 //        Employee[] actualAll = listAll.toArray(new Employee[] {});
@@ -141,7 +149,7 @@ class CompanyServiceImplTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testSalaryDistributionByDepartments() {
         DepartmentAvgSalary[] expectedDistribution = {
                 new DepartmentAvgSalary(DEPARTMENT1, (SALARY1 + SALARY2) / 2),
@@ -154,7 +162,7 @@ class CompanyServiceImplTest {
         assertArrayEquals(expectedDistribution, actualDistribution);
      }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testGetAllEmployees() {
         // HW #22
         List<Employee> listEmployees = company.getAllEmployees();
@@ -165,7 +173,7 @@ class CompanyServiceImplTest {
 //        assertArrayEquals(employees, arrayEmployess);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testGetEmployessBySalary() {
         // HW #22
         // Everyone in company
@@ -189,7 +197,7 @@ class CompanyServiceImplTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testGetSalaryDistribution() {
         int interval = 2000;
         List<SalaryIntervalDistribution> distribution = company.getSalaryDistribution(interval);
@@ -200,11 +208,32 @@ class CompanyServiceImplTest {
         };
         assertArrayEquals(expectedDistribution, distribution.toArray(new SalaryIntervalDistribution[0]));
     }
-    @org.junit.jupiter.api.Test
+    @Test
     void testUpdateDepartment() {
         assertEquals(empl2, company.updateDepartment(ID2, DEPARTMENT2));
         runListTest(new Employee[] {empl1}, company.getEmployeesByDepartment(DEPARTMENT1));
         runListTest(new Employee[] {empl2, empl3, empl4}, company.getEmployeesByDepartment(DEPARTMENT2));
+
+    }
+    @Test
+    void testUpdateSalary() {
+        assertEquals(empl2, company.updateSalary(ID2, SALARY3));
+        runListTest(new Employee[] {empl1}, company.getEmployessBySalary(SALARY1, SALARY3));
+        runListTest(new Employee[] {empl2, empl3, empl4}, company.getEmployessBySalary(SALARY3, SALARY5));
+    }
+
+    @Test
+    @Order(1)
+     void testSave() {
+        company.save(FILE_PATH); // saving company data in file
+    }
+
+    @Test
+    @Order(2)
+    void testRestore() {
+        CompanyService companySaved = new CompanyServiceImpl();
+        companySaved.restore(FILE_PATH);
+        runListTest(employees, companySaved.getAllEmployees());
     }
 
 
@@ -254,15 +283,15 @@ class CompanyServiceImplTest {
 //    void updateDepartment() {
 //    }
 
-    @org.junit.jupiter.api.Test
-    void updateSalary() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void updateSalary() {
+//    }
 
-    @org.junit.jupiter.api.Test
-    void save() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void save() {
+//    }
 
-    @org.junit.jupiter.api.Test
-    void restore() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void restore() {
+//    }
 }
