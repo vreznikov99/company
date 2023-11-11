@@ -2,6 +2,7 @@ package tlalim.company.test;
 
 import tlalim.company.dto.DepartmentAvgSalary;
 import tlalim.company.dto.Employee;
+import tlalim.company.dto.SalaryIntervalDistribution;
 import tlalim.company.service.*;
 
 import java.time.LocalDate;
@@ -93,15 +94,17 @@ class CompanyServiceImplTest {
         List<Employee> list1 = company.getEmployeesByDepartment(DEPARTMENT1);
         List<Employee> list2 = company.getEmployeesByDepartment(DEPARTMENT2);
 
-        Employee[] actualDep1 = list1.toArray(new Employee[] {});
-        Employee[] actualDep2 = list2.toArray(new Employee[] {});
-
-        Arrays.sort(actualDep1);
-        Arrays.sort(actualDep2);
+//        Employee[] actualDep1 = list1.toArray(new Employee[] {});
+//        Employee[] actualDep2 = list2.toArray(new Employee[] {});
+//
+//        Arrays.sort(actualDep1);
+//        Arrays.sort(actualDep2);
 
         assertTrue(company.getEmployeesByDepartment(DEPARTMENT6).isEmpty());
-        assertArrayEquals(expectedDep1, actualDep1);
-        assertArrayEquals(expectedDep2, actualDep2);
+        runListTest(expectedDep1, list1); // Department1
+        runListTest(expectedDep1, list2); // Department2
+//        assertArrayEquals(expectedDep1, actualDep1);
+//        assertArrayEquals(expectedDep2, actualDep2);
     }
     private int getAge(LocalDate birthDate)
     {
@@ -110,20 +113,32 @@ class CompanyServiceImplTest {
 
     }
 
+    private void runListTest(Employee[] expected, List<Employee> list) {
+           Employee[] actual = list.toArray(new Employee[] {});
+           Arrays.sort(actual);
+           assertArrayEquals(expected, actual);
+    }
+
     @org.junit.jupiter.api.Test
     void testGetEmployeeByAge() {
-        List<Employee> listAll = company.getEmployeeByAge(0, 100);
-        Employee[] actualAll = listAll.toArray(new Employee[] {});
-        Arrays.sort(actualAll);
-        assertArrayEquals(employees, actualAll);
-        List<Employee> listEmpty = company.getEmployeeByAge(90,100);
-        assertTrue(listEmpty.isEmpty());
-        List<Employee> list2_3 = company.getEmployeeByAge(getAge(DATE3), getAge(DATE1)); // DATE1 is not taken
-        Employee[] actual2_3 = list2_3.toArray(new Employee[] {});
-        Employee[] expected2_3 = {empl2, empl3};
-        Arrays.sort(actual2_3);
-        assertArrayEquals(expected2_3, actual2_3);
+//        List<Employee> listAll = company.getEmployeeByAge(0, 100);
+//        Employee[] actualAll = listAll.toArray(new Employee[] {});
+//        Arrays.sort(actualAll);
+//        assertArrayEquals(employees, actualAll);
+//        List<Employee> listEmpty = company.getEmployeeByAge(90,100);
+//        assertTrue(listEmpty.isEmpty());
+//        List<Employee> list2_3 = company.getEmployeeByAge(getAge(DATE3), getAge(DATE1)); // DATE1 is not taken
+//        Employee[] actual2_3 = list2_3.toArray(new Employee[] {});
+//        Employee[] expected2_3 = {empl2, empl3};
+//        Arrays.sort(actual2_3);
+//        assertArrayEquals(expected2_3, actual2_3);
 //        assert (actual2_3 == expected2_3);
+        //** - Updated - **
+        runListTest(employees, company.getEmployeeByAge(0, 100));
+        runListTest(new Employee[0], company.getEmployeeByAge(90, 100));
+        runListTest(new Employee[] {empl2, empl3}, company.getEmployeeByAge(getAge(DATE3), getAge(DATE1)));
+
+
     }
 
     @org.junit.jupiter.api.Test
@@ -143,9 +158,11 @@ class CompanyServiceImplTest {
     void testGetAllEmployees() {
         // HW #22
         List<Employee> listEmployees = company.getAllEmployees();
-        Employee[] arrayEmployess = listEmployees.toArray(new Employee[] {});
-        Arrays.sort(arrayEmployess);
-        assertArrayEquals(employees, arrayEmployess);
+        runListTest(employees, listEmployees);
+
+//        Employee[] arrayEmployess = listEmployees.toArray(new Employee[] {});
+//        Arrays.sort(arrayEmployess);
+//        assertArrayEquals(employees, arrayEmployess);
     }
 
     @org.junit.jupiter.api.Test
@@ -153,21 +170,42 @@ class CompanyServiceImplTest {
         // HW #22
         // Everyone in company
         List<Employee> listEmployeeAll = company.getEmployessBySalary(0, Integer.MAX_VALUE);
-        Employee[] arrEmployeeAll = listEmployeeAll.toArray(new Employee[] {});
-        Arrays.sort(arrEmployeeAll);
-        assertArrayEquals(employees, arrEmployeeAll);
+        runListTest(employees, listEmployeeAll);
+//        Employee[] arrEmployeeAll = listEmployeeAll.toArray(new Employee[] {});
+//        Arrays.sort(arrEmployeeAll);
+//        assertArrayEquals(employees, arrEmployeeAll);
+        // Checking none Employees
+        runListTest(new Employee[0], company.getEmployessBySalary(100000, Integer.MAX_VALUE));
         // Checking negative salary
         List<Employee> listEmployeeNegative = company.getEmployeeByAge(Integer.MIN_VALUE, 0);
         assertTrue(listEmployeeNegative.isEmpty());
         // Comparing by Salary
-        List<Employee> listEmployeeSalCompare1_2 = company.getEmployessBySalary(SALARY1, SALARY3); // SALARY3 is not included
-        Employee[] arrEmployeeSalCompare1_2 = listEmployeeSalCompare1_2.toArray(new Employee[] {});
-        Arrays.sort(arrEmployeeSalCompare1_2);
-        Employee[] arrExpected1_2 = {empl1, empl2};
-        assertArrayEquals(arrExpected1_2, arrEmployeeSalCompare1_2);
+        runListTest(new Employee[] {empl1, empl2}, company.getEmployessBySalary(SALARY1, SALARY3));
+//        List<Employee> listEmployeeSalCompare1_2 = company.getEmployessBySalary(SALARY1, SALARY3); // SALARY3 is not included
+//        Employee[] arrEmployeeSalCompare1_2 = listEmployeeSalCompare1_2.toArray(new Employee[] {});
+//        Arrays.sort(arrEmployeeSalCompare1_2);
+//        Employee[] arrExpected1_2 = {empl1, empl2};
+//        assertArrayEquals(arrExpected1_2, arrEmployeeSalCompare1_2);
 
     }
 
+    @org.junit.jupiter.api.Test
+    void testGetSalaryDistribution() {
+        int interval = 2000;
+        List<SalaryIntervalDistribution> distribution = company.getSalaryDistribution(interval);
+        SalaryIntervalDistribution[] expectedDistribution = {
+                new SalaryIntervalDistribution(SALARY1, SALARY1 + interval, 2),
+                new SalaryIntervalDistribution(SALARY3, SALARY3 + interval, 2),
+                new SalaryIntervalDistribution(SALARY5, SALARY5 + interval, 1)
+        };
+        assertArrayEquals(expectedDistribution, distribution.toArray(new SalaryIntervalDistribution[0]));
+    }
+    @org.junit.jupiter.api.Test
+    void testUpdateDepartment() {
+        assertEquals(empl2, company.updateDepartment(ID2, DEPARTMENT2));
+        runListTest(new Employee[] {empl1}, company.getEmployeesByDepartment(DEPARTMENT1));
+        runListTest(new Employee[] {empl2, empl3, empl4}, company.getEmployeesByDepartment(DEPARTMENT2));
+    }
 
 
     @org.junit.jupiter.api.AfterEach
@@ -208,13 +246,13 @@ class CompanyServiceImplTest {
 //    void salaryDistributionByDepartments() {
 //    }
 
-    @org.junit.jupiter.api.Test
-    void getSalaryDistribution() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void getSalaryDistribution() {
+//    }
 
-    @org.junit.jupiter.api.Test
-    void updateDepartment() {
-    }
+//    @org.junit.jupiter.api.Test
+//    void updateDepartment() {
+//    }
 
     @org.junit.jupiter.api.Test
     void updateSalary() {
