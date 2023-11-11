@@ -70,41 +70,44 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) {
+        // Algorithm Complexity: O[LogN]
 
         return null;
     }
 
     @Override
     public List<DepartmentAvgSalary> salaryDistributionByDepartments() {
-
+        // Algorithm Complexity: O[N]
         return null;
     }
 
     @Override
     public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) {
-
+        // Algorithm Complexity: O[N]
         return null;
     }
 
     @Override
     public Employee updateDepartment(long id, String newDepartment) {
-
+        // Algorithm Complexity: O[1]
         return null;
     }
 
     @Override
     public Employee updateSalary(long id, int newSalary) {
-
+        // Algorithm Complexity: O[LogN]
         return null;
     }
 
     @Override
     public void save(String filePath) {
+        // Algorithm Complexity: O[N]
 
     }
 
     @Override
     public void restore(String filePath) {
+        // Algorithm Complexity: O[N]
 
     }
 }
