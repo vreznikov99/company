@@ -2,11 +2,15 @@ package tlalim.company.service;
 
 import tlalim.company.dto.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class CompanyServiceImpl implements CompanyService {
     HashMap<Long, Employee> employeesMap = new HashMap<>();
-    HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();
+    HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();  // key - department, value - Set of employees working in the department
+    TreeMap<Integer, Set<Employee>> employeesSalary = new TreeMap<>();     // key - salary, value - set of employees having the salary value
+    TreeMap<LocalDate, Set<Employee>> employeesAge = new TreeMap<>();      // key - birthdate, value - set of employees born at the date
+
 
     @Override
     /*
@@ -48,19 +52,19 @@ public class CompanyServiceImpl implements CompanyService {
      *  In the case none employees in the department the method returns empty list
      */
     public List<Employee> getEmployeesByDepartment(String department) {
-        // Algorithm Complexity: O[N]
+        // Algorithm Complexity: O[1]
         return null;
     }
 
     @Override
     public List<Employee> getAllEmployees() {
-
+        // Algorithm Complexity: O[N]
         return null;
     }
 
     @Override
     public List<Employee> getEmployessBySalary(int salaryFrom, int salaryTo) {
-
+        // Algorithm Complexity: O[LogN]
         return null;
     }
 
