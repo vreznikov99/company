@@ -94,7 +94,7 @@ public class InterviewTasks {
     public static boolean isAnagram(String string, String anagram) {
         HashMap <Character,Integer> map = new HashMap();
         HashMap <Character,Integer> map1 = new HashMap();
-        char [] a = string.toCharArray(); // обеспечивает простой способ преобразования строки в массив символов всего одним вызовом метода.
+        char [] a = string.toCharArray();
         char [] b = anagram.toCharArray();
         boolean running = false;
         for (char c : a)
