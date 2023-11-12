@@ -22,7 +22,7 @@ public static boolean isSum2(int [] ar, int sum) {
         }
         return false;
         }
-public boolean is2Sum2N2(int[] ar, int sum)
+public static boolean is2Sum2N2(int[] ar, int sum)
 {
     int i = 0;
     int j = 0;

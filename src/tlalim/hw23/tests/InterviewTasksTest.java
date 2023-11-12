@@ -8,12 +8,31 @@ import static org.junit.jupiter.api.Assertions.*;
 import static tlalim.hw23.InterviewTasks.*;
 
 class InterviewTasksTest {
+    private static final int N_NUMBERS = 100000;
+    int[] bigArray = new int[N_NUMBERS];
+    @Test
+    void isSum2PerformanceTest(){
+        // isSum2Complexity O[N]
+        isSum2(bigArray, 1);
+    }
+    @Test
+    void isSum2N2PerformanceTest(){
+        // isSum2Complexity O[N]
+        is2Sum2N2(bigArray, 1);
+    }
     @Test
     void isSum2Test() {
         int [] ar1 = {1000, 300, -200, 20, 40, -10};
         assertTrue(isSum2(ar1, 800));
         assertTrue(isSum2(ar1, 990));
         assertFalse(isSum2(ar1, 50));
+    }
+    @Test
+    void is2Sum2N2Test() {
+        int [] ar1 = {1000, 300, -200, 20, 40, -10};
+//        assertTrue(is2Sum2N2(ar1, 800));
+//        assertTrue(is2Sum2N2(ar1, 990));
+//        assertFalse(is2Sum2N2(ar1, 50));
     }
     @Test
     void getMaxPositiveWithNegativeValueTest() {
