@@ -30,9 +30,9 @@ class InterviewTasksTest {
     @Test
     void is2Sum2N2Test() {
         int [] ar1 = {1000, 300, -200, 20, 40, -10};
-//        assertTrue(is2Sum2N2(ar1, 800));
-//        assertTrue(is2Sum2N2(ar1, 990));
-//        assertFalse(is2Sum2N2(ar1, 50));
+        assertTrue(is2Sum2N2(ar1, 800));
+        assertTrue(is2Sum2N2(ar1, 990));
+        assertFalse(is2Sum2N2(ar1, 50));
     }
     @Test
     void getMaxPositiveWithNegativeValueTest() {
