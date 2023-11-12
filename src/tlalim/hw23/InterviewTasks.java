@@ -22,6 +22,23 @@ public static boolean isSum2(int [] ar, int sum) {
         }
         return false;
         }
+public boolean is2Sum2N2(int[] ar, int sum)
+{
+    int i = 0;
+    int j = 0;
+    boolean running = true;
+    while(i < ar.length && running){
+        j = i - 1;
+        while(j >= 0 && running){
+            if(ar[j] + ar[i] == sum){
+                running = false;
+                break;
+            }
+        }
+    }
+
+    return running;
+}
 /**
  *
  * @param ar array of integer numbers
