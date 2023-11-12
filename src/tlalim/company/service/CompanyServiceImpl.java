@@ -21,7 +21,38 @@ public class CompanyServiceImpl implements CompanyService {
      */
     public Employee hireEmployee(Employee empl) {
         // Algorithm Complexity: O[1]
-        return null;
+        long id = empl.id();
+        if(employeesMap.containsKey(id)){
+            throw new IllegalStateException("Employee already exists" + id);
+        }
+        employeesMap.put(id, empl);
+        addEmployeeSalary(empl);
+        addEmployeeDepartment(empl);
+        addEmployeeAge(empl);
+        return empl;
+    }
+
+    private void addEmployeeDepartment(Employee empl) {
+        String department = empl.department();
+        Set<Employee> set = employeesDepartment.get(department);
+        if(set == null){
+            set = new HashSet<>();
+            employeesDepartment.put(department, set);
+        }
+        set.add(empl);
+    }
+
+    private void addEmployeeAge(Employee empl) {
+        LocalDate birthDate = empl.birthDate();
+        Set<Employee> set = employeesAge.computeIfAbsent(birthDate, k -> new HashSet<>());
+        set.add(empl);
+
+    }
+
+    private void addEmployeeSalary(Employee empl) {
+        int salary = empl.salary();
+        employeesSalary.computeIfAbsent(salary, k -> new HashSet<>()).add(empl);
+
     }
 
     @Override
@@ -32,7 +63,43 @@ public class CompanyServiceImpl implements CompanyService {
      */
     public Employee fireEmployee(long id) {
         // Algorithm Complexity: O[1]
-        return null;
+        Employee empl = employeesMap.remove(id);
+        if(empl == null)
+        {
+            throw new IllegalStateException("Employee not found" + id);
+        }
+        removeEmployeesDepartment(empl);
+        removeEmployeesSalary(empl);
+        removeEmployeesAge(empl);
+        return empl;
+    }
+
+    private void removeEmployeesAge(Employee empl) {
+        LocalDate birthDate = empl.birthDate();
+        Set<Employee> set = employeesAge.get(birthDate);
+        set.remove(empl); // removing reference to being removed employee from the set of employees with a given birth date
+        if(set.isEmpty()){
+            employeesAge.remove(birthDate);
+        }
+
+    }
+
+    private void removeEmployeesSalary(Employee empl) {
+        int salary = empl.salary();
+        Set<Employee> set = employeesSalary.get(salary);
+        set.remove(empl);
+        if(set.isEmpty()){
+            employeesSalary.remove(salary);
+        }
+    }
+
+    private void removeEmployeesDepartment(Employee empl) {
+        String department = empl.department();
+        Set<Employee> set = employeesDepartment.get(department);
+        set.remove(empl);
+        if(set.isEmpty()){
+            employeesDepartment.remove(department);
+        }
     }
 
     @Override
