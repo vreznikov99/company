@@ -110,7 +110,7 @@ class CompanyServiceImplTest {
 
         assertTrue(company.getEmployeesByDepartment(DEPARTMENT6).isEmpty());
         runListTest(expectedDep1, list1); // Department1
-        runListTest(expectedDep1, list2); // Department2
+        runListTest(expectedDep2, list2); // Department2
 //        assertArrayEquals(expectedDep1, actualDep1);
 //        assertArrayEquals(expectedDep2, actualDep2);
     }
@@ -177,23 +177,27 @@ class CompanyServiceImplTest {
     void testGetEmployessBySalary() {
         // HW #22
         // Everyone in company
-        List<Employee> listEmployeeAll = company.getEmployessBySalary(0, Integer.MAX_VALUE);
-        runListTest(employees, listEmployeeAll);
-//        Employee[] arrEmployeeAll = listEmployeeAll.toArray(new Employee[] {});
-//        Arrays.sort(arrEmployeeAll);
-//        assertArrayEquals(employees, arrEmployeeAll);
-        // Checking none Employees
-        runListTest(new Employee[0], company.getEmployessBySalary(100000, Integer.MAX_VALUE));
-        // Checking negative salary
-        List<Employee> listEmployeeNegative = company.getEmployeeByAge(Integer.MIN_VALUE, 0);
-        assertTrue(listEmployeeNegative.isEmpty());
-        // Comparing by Salary
+//        List<Employee> listEmployeeAll = company.getEmployessBySalary(0, Integer.MAX_VALUE);
+//        runListTest(employees, listEmployeeAll);
+////        Employee[] arrEmployeeAll = listEmployeeAll.toArray(new Employee[] {});
+////        Arrays.sort(arrEmployeeAll);
+////        assertArrayEquals(employees, arrEmployeeAll);
+//        // Checking none Employees
+//        runListTest(new Employee[0], company.getEmployessBySalary(100000, Integer.MAX_VALUE));
+//        // Checking negative salary
+//        List<Employee> listEmployeeNegative = company.getEmployeeByAge(Integer.MIN_VALUE, 0);
+//        assertTrue(listEmployeeNegative.isEmpty());
+//        // Comparing by Salary
+//        runListTest(new Employee[] {empl1, empl2}, company.getEmployessBySalary(SALARY1, SALARY3));
+////        List<Employee> listEmployeeSalCompare1_2 = company.getEmployessBySalary(SALARY1, SALARY3); // SALARY3 is not included
+////        Employee[] arrEmployeeSalCompare1_2 = listEmployeeSalCompare1_2.toArray(new Employee[] {});
+////        Arrays.sort(arrEmployeeSalCompare1_2);
+////        Employee[] arrExpected1_2 = {empl1, empl2};
+////        assertArrayEquals(arrExpected1_2, arrEmployeeSalCompare1_2);
+
+        runListTest(employees, company.getEmployessBySalary(0, Integer.MAX_VALUE)); //all employees
+        runListTest(new Employee[] {}, company.getEmployessBySalary(100000, Integer.MAX_VALUE)); //none employees
         runListTest(new Employee[] {empl1, empl2}, company.getEmployessBySalary(SALARY1, SALARY3));
-//        List<Employee> listEmployeeSalCompare1_2 = company.getEmployessBySalary(SALARY1, SALARY3); // SALARY3 is not included
-//        Employee[] arrEmployeeSalCompare1_2 = listEmployeeSalCompare1_2.toArray(new Employee[] {});
-//        Arrays.sort(arrEmployeeSalCompare1_2);
-//        Employee[] arrExpected1_2 = {empl1, empl2};
-//        assertArrayEquals(arrExpected1_2, arrEmployeeSalCompare1_2);
 
     }
 

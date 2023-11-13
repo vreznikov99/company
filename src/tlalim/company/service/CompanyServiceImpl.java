@@ -110,7 +110,7 @@ public class CompanyServiceImpl implements CompanyService {
      */
     public Employee getEmployee(long id) {
         // Algorithm Complexity: O[1]
-        return null;
+        return employeesMap.get(id);
     }
 
     @Override
@@ -120,26 +120,46 @@ public class CompanyServiceImpl implements CompanyService {
      */
     public List<Employee> getEmployeesByDepartment(String department) {
         // Algorithm Complexity: O[1]
-        return null;
+        //in the case no employees in the given department the empty collection should be returned
+        Set<Employee> setEmployeesDep = employeesDepartment.getOrDefault(department, new HashSet<>());
+
+        return new ArrayList<>(setEmployeesDep);
     }
 
     @Override
     public List<Employee> getAllEmployees() {
         // Algorithm Complexity: O[N]
-        return null;
+        return new ArrayList<>(employeesMap.values());
     }
 
     @Override
     public List<Employee> getEmployessBySalary(int salaryFrom, int salaryTo) {
         // Algorithm Complexity: O[LogN]
-        return null;
+        Collection<Set<Employee>> col = employeesSalary.subMap(salaryFrom, salaryTo).values();
+        ArrayList<Employee> res = new ArrayList<>();
+        for (Set<Employee> set: col){
+            res.addAll(set);
+        }
+        return res;
     }
 
     @Override
     public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) {
         // Algorithm Complexity: O[LogN]
+        LocalDate dateFrom = getBirthfDate(ageTo);
+        LocalDate dateTo = getBirthfDate(ageFrom);
+        Collection<Set<Employee>> col = employeesAge.subMap(dateFrom, dateTo).values();
+        ArrayList<Employee> res = new ArrayList<>();
+        for(Set<Employee> set : col)
+        {
+            res.addAll(set);
+        }
 
-        return null;
+        return res;
+    }
+
+    private LocalDate getBirthfDate(int age) {
+        return LocalDate.now().minusYears(age);
     }
 
     @Override
@@ -157,13 +177,21 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Employee updateDepartment(long id, String newDepartment) {
         // Algorithm Complexity: O[1]
-        return null;
+        Employee empl = fireEmployee(id);
+        Employee newEmployee =
+                new Employee(id, empl.name(), empl.salary(), newDepartment, empl.birthDate());
+
+        return hireEmployee(newEmployee);
     }
 
     @Override
     public Employee updateSalary(long id, int newSalary) {
         // Algorithm Complexity: O[LogN]
-        return null;
+        Employee empl = fireEmployee(id);
+        Employee newEmployee =
+                new Employee(id, empl.name(), newSalary, empl.department(), empl.birthDate());
+
+        return hireEmployee(newEmployee);
     }
 
     @Override
