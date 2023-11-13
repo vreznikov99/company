@@ -41,7 +41,6 @@ public class MyArray {
      * @param value
      */
     public void set(int index, int value) {
-        //TODO
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Wrong index" + index);
         }
