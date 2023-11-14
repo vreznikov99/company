@@ -71,6 +71,15 @@ class StreamTest {
         string.chars().mapToObj(c -> "" + (char) c).
                 forEach(s -> System.out.print(s + ","));
     }
+    @Test
+    void splittingStringArray(){
+        String[] strings = {"Hello", "World"};
+        //output: H,e,l,l,o,w,o,r,l,d
+        Arrays.stream(strings).flatMapToInt(str -> str.chars()).
+                mapToObj(c -> "" + (char) c).
+                forEach(s -> System.out.print(s + ","));
+
+    }
 
 
 }
