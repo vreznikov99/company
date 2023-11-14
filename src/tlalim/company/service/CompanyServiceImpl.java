@@ -4,6 +4,7 @@ import tlalim.company.dto.*;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CompanyServiceImpl implements CompanyService {
     HashMap<Long, Employee> employeesMap = new HashMap<>();
@@ -165,7 +166,13 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<DepartmentAvgSalary> salaryDistributionByDepartments() {
         // Algorithm Complexity: O[N]
-        return null;
+        Map<String, Double> map = employeesMap.values().stream().
+                                          collect(Collectors.groupingBy(empl -> empl.department(),
+                                                  Collectors.averagingInt(empl -> empl.salary())));
+        System.out.println(map);
+        return map.entrySet().stream().
+                map(e -> new DepartmentAvgSalary(e.getKey(), e.getValue().intValue())).
+                toList();
     }
 
     @Override
