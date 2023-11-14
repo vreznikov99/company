@@ -72,4 +72,5 @@ class StreamTest {
                 forEach(s -> System.out.print(s + ","));
     }
 
+
 }
