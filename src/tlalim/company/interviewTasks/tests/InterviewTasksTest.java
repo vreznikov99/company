@@ -69,6 +69,26 @@ class InterviewTasksTest {
         assertFalse(isAnagram(string, "wolye"));//must be two 'l'
 
     }
+    @Test
+    void displayDigitsDistributionTest(){
+        displayDigitsDistribution();
+        /* required output:
+         * always 1 will be first
+         *        2 will be second
+         * 1 - <counter of occurrences>
+         * 2 - <counter of occurrences>
+         * random order of digits
+         * 0 - <counter of occurrences>
+         * 4 - <counter of occurrences>
+         * 3 - <counter of occurrences>
+         * 5 - <counter of occurrences>
+         * 7 - <counter of occurrences>
+         * 6 - <counter of occurrences>
+         * 9 - <counter of occurrences>
+         */
+    }
+
+
 
 
 }

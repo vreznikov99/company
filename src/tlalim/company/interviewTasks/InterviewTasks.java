@@ -121,5 +121,17 @@ public class InterviewTasks {
 
     }
 
+    // Task for streams/grouping
+    public static void displayDigitsDistribution(){
+        int nNumbers = 1_000_000;
+        //TODO
+        // create steam of random int's, each int number in range[1,Integer.MAX_VALUE]
+        // conversion to stream of Strings
+        // extract separate char's from Strings
+        // grouping with counting
+        // sorting
+        // printing
+    }
+
 
 }
