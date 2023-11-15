@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.*;
 
 
+
 public class InterviewTasks {
     /**
      *
@@ -124,8 +125,7 @@ public class InterviewTasks {
 
     // Task for streams/grouping
     public static void displayDigitsDistribution(){
-//        int nNumbers = 1_000_000;
-        //TODO
+
         // create steam of random int's, each int number in range[1,Integer.MAX_VALUE]
         // conversion to stream of Strings
         // extract separate char's from Strings
@@ -133,39 +133,21 @@ public class InterviewTasks {
         // sorting
         // printing
 
-        int streamSize = 1_000_000; // Change this to the desired size of the stream
+        int nNumbers = 1_000_000;
+        Random gen = new Random();
+//        Map<Integer, Long> map = gen.ints(nNumbers, 1, Integer.MAX_VALUE).
+//        mapToObj(Integer::toString).
+//        flatMapToInt(s->s.chars()).boxed().
+//        collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+        Map<String, Long> map = gen.ints(nNumbers, 1, Integer.MAX_VALUE).
+                mapToObj(Integer::toString).
+                flatMapToInt(s->s.chars()).
+                mapToObj(n -> "" + (char)n).
+                collect(Collectors.groupingBy(s -> s, Collectors.counting()));
 
-        // Create a stream of random integers
-        Stream<Integer> randomIntStream = new Random().ints(1, Integer.MAX_VALUE)
-                .limit(streamSize)
-                .boxed(); // Box the primitive int to Integer
-
-        // Conversion to a stream of Strings
-        Stream<String> stringStream = randomIntStream.map(String::valueOf);
-
-        // Extract separate characters from Strings
-        Stream<Character> characterStream = stringStream
-                .flatMapToInt(String::chars)
-                .mapToObj(c -> (char) c);
-
-        // Grouping with counting
-        Map<Character, Long> charCountMap = characterStream
-                .collect(Collectors.groupingBy(c -> c, Collectors.counting()));
-
-        // Sorting
-        Map<Character, Long> sortedCharCountMap = charCountMap.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e2, // Merge function to keep the order of elements with the same count
-                        LinkedHashMap::new
-                ));
-
-        System.out.println(sortedCharCountMap);
-
-
-
+        map.entrySet().stream().
+        sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue())).
+        forEach(e -> System.out.printf("%s - %d\n", e.getKey(), e.getValue()));
     }
 
 
