@@ -5,6 +5,7 @@ import tlalim.company.dto.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.*;
 
 public class CompanyServiceImpl implements CompanyService {
     HashMap<Long, Employee> employeesMap = new HashMap<>();
@@ -166,19 +167,39 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<DepartmentAvgSalary> salaryDistributionByDepartments() {
         // Algorithm Complexity: O[N]
-        Map<String, Double> map = employeesMap.values().stream().
-                                          collect(Collectors.groupingBy(empl -> empl.department(),
-                                                  Collectors.averagingInt(empl -> empl.salary())));
+//        Map<String, Double> map = employeesMap.values().stream().
+//                                          collect(Collectors.groupingBy(empl -> empl.department(),
+//                                                  Collectors.averagingInt(empl -> empl.salary())));
+////        System.out.println(map);
+//        return map.entrySet().stream().
+//                map(e -> new DepartmentAvgSalary(e.getKey(), e.getValue().intValue())).
+//                toList();
+
+        Map<String, Double> map = employeesMap.values().stream()
+                .collect(Collectors.groupingBy(empl -> empl.department()
+                        ,Collectors.averagingInt(Employee::salary)));
         System.out.println(map);
-        return map.entrySet().stream().
-                map(e -> new DepartmentAvgSalary(e.getKey(), e.getValue().intValue())).
-                toList();
+
+        return map.entrySet().stream().map(e -> new DepartmentAvgSalary(e.getKey(), e.getValue()
+                .intValue())).toList();
     }
 
     @Override
     public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) {
         // Algorithm Complexity: O[N]
-        return null;
+        //  key       number ampu bt
+        Map<Integer, Long> map = employeesMap.values().
+                                 stream().
+                                 collect(Collectors.groupingBy(e->e.salary() / interval, Collectors.counting()));
+//        System.out.println(map);
+        return map.entrySet().stream().sorted((e1, e2) -> Integer.compare(e1.getKey(), e2.getKey())).
+                map(e->new SalaryIntervalDistribution(e.getKey() * interval, e.getKey() * interval + interval, e.getValue())).toList();
+//        return map.entrySet().stream()
+//                .sorted((e1,e2) -> Integer.compare(e1.getKey(), e2.getKey()))
+//                .map(e -> new SalaryIntervalDistribution(
+//                        e.getKey() * interval,
+//                        e.getKey() * interval + interval
+//                        ,e.getValue())).toList();
     }
 
     @Override
@@ -204,12 +225,27 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void save(String filePath) {
         // Algorithm Complexity: O[N]
+        try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filePath))){
+            output.writeObject(getAllEmployees());
+        }catch(Exception e){
+            System.out.println(e.toString());
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void restore(String filePath) {
         // Algorithm Complexity: O[N]
-
+        List<Employee> employees = null;
+        try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(filePath))){
+            employees = (List<Employee>) input.readObject();
+            employees.forEach(this::hireEmployee);
+        }catch (FileNotFoundException e){
+            System.out.println("File with data does not exist");
+        }catch (Exception e){
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
     }
 }
