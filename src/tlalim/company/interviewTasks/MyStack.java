@@ -1,17 +1,24 @@
 package tlalim.company.interviewTasks;
 
+import java.util.LinkedList;
+
 /**
  * All the methods implementations should be in the complexity O[1]
  */
 public class MyStack {
-    //TODO data structure fields
-
+    //data structure fields
+    private LinkedList<Integer> numbers = new LinkedList<>();
+    private LinkedList<Integer> maxNumbers = new LinkedList<>();
     /**
      * adds a given number at top of the stack
      * @param number
      */
     public void push(int number){
-        //TODO
+        numbers.add(number);
+        if(maxNumbers.isEmpty() || number >= maxNumbers.getLast()){
+            maxNumbers.add(number);
+        }
+
     }
 
     /**
@@ -21,8 +28,11 @@ public class MyStack {
      * must be thrown
      */
     public int pull() {
-        //TODO
-        return -1;
+        int res = numbers.removeLast();
+        if(res == maxNumbers.getLast()){
+            maxNumbers.removeLast();
+        }
+        return res;
     }
 
     /**
@@ -30,8 +40,7 @@ public class MyStack {
      * @return true if stack is empty otherwise false
      */
     public boolean isEmpty(){
-        //TODO
-        return false;
+        return numbers.isEmpty();
     }
 
     /**
@@ -40,8 +49,7 @@ public class MyStack {
      * In the case the stack is empty the Exception (NoSuchElementException) must be thrown
      */
     public int getMax(){
-        //TODO
-        return -1;
+        return maxNumbers.getLast();
     }
 
 }

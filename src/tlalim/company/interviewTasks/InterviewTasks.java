@@ -153,10 +153,13 @@ public class InterviewTasks {
     /**
      * prints a given array in shuffled order
      * @param array
-     * Hunt: see solution of sportloto from "java-streams"
+     * Hint: see solution of sportloto from "java-streams"
      */
     public static void displayArrayShuffling(int[] array){
-        //TODO
+        new Random().ints(0,array.length).
+        distinct().limit(array.length).
+        forEach(i -> System.out.print(array[i] + " "));
+
 
     }
 }
