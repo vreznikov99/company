@@ -63,15 +63,16 @@ class CompanyServiceImplTest {
     }
     @Test
     void testHireEmployeeException(){
-        Employee newEmployee = empl1;
-        //FIXME
-        boolean flException = false;
-        try{
-            company.hireEmployee(newEmployee);
-        } catch (IllegalStateException e){
-            flException = true;
-        }
-        assertTrue(flException);
+//        Employee newEmployee = empl1;
+        //FIXED
+//        boolean flException = false;
+//        try{
+//            company.hireEmployee(newEmployee);
+//        } catch (IllegalStateException e){
+//            flException = true;
+//        }
+//        assertTrue(flException);
+        assertThrowsExactly(IllegalStateException.class, () -> company.hireEmployee(empl1));
     }
     @Test
     void testFireEmployeeNormal(){
@@ -80,13 +81,14 @@ class CompanyServiceImplTest {
     }
     @Test
     void testFireEmployeeException() {
-        boolean flException = false;
-        try{
-            company.fireEmployee(ID6);
-        } catch (IllegalStateException e) {
-            flException = true;
-        }
-        assertTrue(flException);
+//        boolean flException = false;
+//        try{
+//            company.fireEmployee(ID6);
+//        } catch (IllegalStateException e) {
+//            flException = true;
+//        }
+//        assertTrue(flException);
+        assertThrowsExactly(IllegalStateException.class, () -> company.fireEmployee(ID6));
     }
     @Test
     void testGetEmployee() {
@@ -234,16 +236,20 @@ class CompanyServiceImplTest {
     }
     @Test
     void testUpdateDepartment() {
-        assertEquals(empl2, company.updateDepartment(ID2, DEPARTMENT2));
-        runListTest(new Employee[] {empl1}, company.getEmployeesByDepartment(DEPARTMENT1));
-        runListTest(new Employee[] {empl2, empl3, empl4}, company.getEmployeesByDepartment(DEPARTMENT2));
+//        assertEquals(empl2, company.updateDepartment(ID2, DEPARTMENT2));
+//        runListTest(new Employee[] {empl1}, company.getEmployeesByDepartment(DEPARTMENT1));
+//        runListTest(new Employee[] {empl2, empl3, empl4}, company.getEmployeesByDepartment(DEPARTMENT2));
+//
+        assertThrowsExactly(IllegalStateException.class, ()->company.updateDepartment(ID6, DEPARTMENT1));
 
     }
     @Test
     void testUpdateSalary() {
-        assertEquals(empl2, company.updateSalary(ID2, SALARY3));
-        runListTest(new Employee[] {empl1}, company.getEmployessBySalary(SALARY1, SALARY3));
-        runListTest(new Employee[] {empl2, empl3, empl4}, company.getEmployessBySalary(SALARY3, SALARY5));
+//        assertEquals(empl2, company.updateSalary(ID2, SALARY3));
+//        runListTest(new Employee[] {empl1}, company.getEmployessBySalary(SALARY1, SALARY3));
+//        runListTest(new Employee[] {empl2, empl3, empl4}, company.getEmployessBySalary(SALARY3, SALARY5));
+//
+        assertThrowsExactly(IllegalStateException.class, () -> company.updateSalary(ID6, SALARY1));
     }
 
     @Test

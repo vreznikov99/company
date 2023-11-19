@@ -77,22 +77,39 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     private void removeEmployeesAge(Employee empl) {
-        LocalDate birthDate = empl.birthDate();
-        Set<Employee> set = employeesAge.get(birthDate);
-        set.remove(empl); // removing reference to being removed employee from the set of employees with a given birth date
+        removeFromMap(employeesAge, empl.birthDate(),empl);
+//        LocalDate birthDate = empl.birthDate();
+//        Set<Employee> set = employeesAge.get(birthDate);
+//        set.remove(empl); // removing reference to being removed employee from the set of employees with a given birth date
+//        if(set.isEmpty()){
+//            employeesAge.remove(birthDate);
+//        }
+
+
+
+    }
+    private <T> void removeFromMap(Map<T, Set<Employee>> map, T key, Employee empl){
+        Set<Employee> set = map.get(key);
+        set.remove(empl);
         if(set.isEmpty()){
-            employeesAge.remove(birthDate);
+            map.remove(key);
         }
+
+    }
+
+    private void removeEmployeeDepartment(Employee empl){
+        removeFromMap(employeesDepartment, empl.department(), empl);
 
     }
 
     private void removeEmployeesSalary(Employee empl) {
         int salary = empl.salary();
-        Set<Employee> set = employeesSalary.get(salary);
-        set.remove(empl);
-        if(set.isEmpty()){
-            employeesSalary.remove(salary);
-        }
+        removeFromMap(employeesSalary, empl.salary(), empl);
+//        Set<Employee> set = employeesSalary.get(salary);
+//        set.remove(empl);
+//        if(set.isEmpty()){
+//            employeesSalary.remove(salary);
+//        }
     }
 
     private void removeEmployeesDepartment(Employee empl) {
@@ -132,6 +149,10 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Employee> getAllEmployees() {
         // Algorithm Complexity: O[N]
         return new ArrayList<>(employeesMap.values());
+    }
+    private <T> List<Employee> getEmployeeList(T from, T to, TreeMap<T, Set<Employee>> map){
+        Collection<Set<Employee>> col = map.subMap(from, to).values();
+        return col.stream().flatMap(Collection::stream).toList();
     }
 
     @Override
