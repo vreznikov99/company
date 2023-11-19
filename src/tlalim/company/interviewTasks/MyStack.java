@@ -10,7 +10,7 @@ public class MyStack {
      * adds a given number at top of the stack
      * @param number
      */
-    void push(int number){
+    public void push(int number){
         //TODO
     }
 
@@ -20,7 +20,7 @@ public class MyStack {
      * In the case the stack is empty the Exception (NoSuchElementException)
      * must be thrown
      */
-    int pull() {
+    public int pull() {
         //TODO
         return -1;
     }
@@ -29,7 +29,7 @@ public class MyStack {
      *
      * @return true if stack is empty otherwise false
      */
-    boolean isEmpty(){
+    public boolean isEmpty(){
         //TODO
         return false;
     }
@@ -39,7 +39,7 @@ public class MyStack {
      * @return maximal number existing in the stack
      * In the case the stack is empty the Exception (NoSuchElementException) must be thrown
      */
-    int getMax(){
+    public int getMax(){
         //TODO
         return -1;
     }
