@@ -83,7 +83,7 @@ public interface InputOutput {
     }
 
     default String readOptions(String prompt, String errorPrompt, Set<String> options) {
-        // TODO
+        //
         // returns string included in the given options
 
         return readObject(prompt, errorPrompt, str->{
@@ -95,7 +95,7 @@ public interface InputOutput {
     }
 
     default String readEmail(String prompt, String errorPrompt){
-        // TODO
+        //
         // returns string with an email address
         return readObject(prompt, errorPrompt, str ->{
             if(!str.contains("@")){
