@@ -1,6 +1,7 @@
 package tlalim.view;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.function.*;
 
 public interface InputOutput {
@@ -44,7 +45,7 @@ public interface InputOutput {
         return readObject(prompt,errorPrompt,Long::parseLong);
     }
 
-    default long readInt(String prompt, String errorPrompt, long min, long max){
+    default long readLong(String prompt, String errorPrompt, long min, long max){
         return readObject(String.format("%s [%d-%d]", prompt, min, max), errorPrompt, str -> {
             long num = Long.parseLong(str);
             if(num < min || num > max){
@@ -57,6 +58,48 @@ public interface InputOutput {
     default LocalDate readDate(String prompt, String errorPrompt){
         // example: 2023-11-20
         return readObject(prompt, errorPrompt, LocalDate::parse);
+    }
+    default LocalDate readDate(String prompt, String errorPrompt, LocalDate from, LocalDate to){
+        // example: 2023-11-20
+
+        return readObject(prompt, errorPrompt, str->{
+            LocalDate date = LocalDate.parse(str);
+            if(date.compareTo(from) < 0 || date.compareTo(to) > 0){
+                throw new RuntimeException(String.format("date must be in the range [%s - %s]", from, to));
+            }
+            return date;
+        });
+    }
+
+    default String readPredicate(String prompt, String errorPrompt, Predicate<String> predicate){
+        // TODO
+        // returns string matching the given predicate
+        return null;
+    }
+
+    default String readOptions(String prompt, String errorPrompt, Set<String> options) {
+        // TODO
+        // returns string included in the given options
+        return null;
+    }
+
+    default String readEmail(String prompt, String errorPrompt){
+        // TODO
+        // returns string with an email address
+        return null;
+    }
+    default double readDouble(String prompt, String errorPrompt) {
+        return readObject(prompt, errorPrompt, Double::parseDouble);
+    }
+
+    default double readLong(String prompt, String errorPrompt, double min, double max){
+        return readObject(String.format("%s [%d-%d]", prompt, min, max), errorPrompt, str -> {
+            double num = Double.parseDouble(str);
+            if(num < min || num > max){
+                throw new RuntimeException(String.format("Must be in the range [%d - %d]", min, max));
+            }
+            return num;
+        });
     }
 
 }
