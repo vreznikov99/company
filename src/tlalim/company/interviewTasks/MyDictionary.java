@@ -17,7 +17,7 @@ public class MyDictionary {
      *
      */
     public boolean addWord(String word) {
-        //TODO
+        //
 //        boolean res = false;
 //        if(!array.contains(word)){
 //            array.add(word);
@@ -46,6 +46,6 @@ public class MyDictionary {
 
 //        String[] res =
 
-        return strRes.toArray(new String[0]);
+        return strRes.toArray(new String[]{});
     }
 }
