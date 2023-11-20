@@ -72,21 +72,37 @@ public interface InputOutput {
     }
 
     default String readPredicate(String prompt, String errorPrompt, Predicate<String> predicate){
-        // TODO
         // returns string matching the given predicate
-        return null;
+        String res = readObject(prompt, errorPrompt, str->{
+            if (!predicate.test(str)){
+                throw new RuntimeException(String.format("wrong predicate %s", predicate));
+            }
+            return str;
+        });
+        return res;
     }
 
     default String readOptions(String prompt, String errorPrompt, Set<String> options) {
         // TODO
         // returns string included in the given options
-        return null;
+
+        return readObject(prompt, errorPrompt, str->{
+            if (!options.contains(str)){
+                throw new RuntimeException(String.format("string %s is not included", str));
+            }
+            return str;
+        });
     }
 
     default String readEmail(String prompt, String errorPrompt){
         // TODO
         // returns string with an email address
-        return null;
+        return readObject(prompt, errorPrompt, str ->{
+            if(!str.contains("@")){
+                throw new RuntimeException(String.format("%s is not an email", str));
+            }
+            return str;
+        });
     }
     default double readDouble(String prompt, String errorPrompt) {
         return readObject(prompt, errorPrompt, Double::parseDouble);
