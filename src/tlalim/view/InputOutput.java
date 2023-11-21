@@ -61,7 +61,6 @@ public interface InputOutput {
     }
     default LocalDate readDate(String prompt, String errorPrompt, LocalDate from, LocalDate to){
         // example: 2023-11-20
-
         return readObject(prompt, errorPrompt, str->{
             LocalDate date = LocalDate.parse(str);
             if(date.compareTo(from) < 0 || date.compareTo(to) > 0){
